@@ -7,6 +7,10 @@ namespace tamagotchi
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+
+            Tamagotchi firstPet = new Tamagotchi();
+
+        
             Console.ReadLine();
         }
     }
