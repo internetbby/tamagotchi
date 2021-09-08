@@ -8,11 +8,11 @@ class Tamagotchi{
 
     private List<string> wordsKnown = new List<string>();
 
-    private bool isAlive = true; 
+    public bool isAlive = true; 
 
     private Random generator = new Random();
     
-    public string name; 
+    public string name = ""; 
 
     public void Tick() {
         hunger++; 
@@ -24,17 +24,19 @@ class Tamagotchi{
     }
 
     public void Feed(){
-        hunger--; 
+        hunger -= 3; 
     }
 
     private void ReduceBoredom(){
-        boredom--;  
+        boredom-= 3;  
     }
 
     public void Teach(string word){
-      word =  Console.ReadLine();
+      //word =  Console.ReadLine();
 
       wordsKnown.Add(word);
+
+      ReduceBoredom();
       
     }
 
@@ -52,14 +54,21 @@ class Tamagotchi{
     public void Hi(){
         int wordChosen = generator.Next(wordsKnown.Count);
 
-        if (wordsKnown.Count < 0){
+        if (wordsKnown.Count == 0){
             System.Console.WriteLine("I don't know any words yet");
         }
         else{
             System.Console.WriteLine('"' + wordsKnown[wordChosen] + '"');
             ReduceBoredom();
         }
-
         // add tick method after every action or when choosing action.. hm 
     }
+            public void GetAlive (){
+            if (boredom==10 || hunger == 10 ){
+                isAlive = false; 
+            }
+            else{
+                isAlive = true; 
+            }
+        }
 }
