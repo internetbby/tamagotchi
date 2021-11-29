@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using Raylib_cs;
 
 namespace tamagotchi
 {
@@ -6,105 +8,73 @@ namespace tamagotchi
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+             Raylib.InitWindow(800,600, "Tamagotchi"); //Initilization 
 
-            string userAction; 
+             string currentScreen = "title"; //adding a sort of function to switch screens
 
-            string[] validResponses = {"a" , "b", "c", "feed", "say hi!", "say", "say hi", "teach word", "teach" , "d" , "stat", "get stat" , "get pet stat"};
-            Tamagotchi firstPet = new Tamagotchi();
-            while(firstPet.isAlive){
-                while (firstPet.name == ""){
-                    System.Console.WriteLine("please name me!");
-                    firstPet.name = Console.ReadLine(); 
+             List<string> tamagotchi  = new List<string>();
 
-                    if (firstPet.name != ""){
-                        System.Console.WriteLine("My name is now " + firstPet.name);
-                    }
-                }
 
-                Console.ReadLine();
-                
-                System.Console.WriteLine("what do you wanna do");
-                System.Console.WriteLine("a) Feed   b) Say hi!     c) Teach Word  d)Get Pet Stat");
+            Raylib.SetTargetFPS(60);
+                    Tamagotchi t1 = null;
 
-                userAction = Console.ReadLine();
+            while(!Raylib.WindowShouldClose()){ //Main game loop
 
-                userAction = toLower(userAction); 
+                List<string> tamagotchisOWned  = new List<string>();
 
-                bool userChosenAction = isValidResponse(userAction, validResponses);
+                switch(currentScreen){ //Game logic
+                    case "title":
 
-                if(userChosenAction == true){
-                    firstPet.Tick();
-                    switch (userAction){
-                        case "a": 
-                        case "feed":
-                        firstPet.Feed();
-
-                        System.Console.WriteLine("yum!");
-                        break;
-
-                        case "b":
-                        case "say hi":
-                        case "say hi!":
-                        firstPet.Hi();
-                        break; 
-
-                        case "c":
-                        case "teach":
-                        case "teach word":
-                        System.Console.WriteLine("what word should I learn?");
-                        string learntWord = Console.ReadLine();
-                        while (learntWord == ""){
-                            System.Console.WriteLine("tell me a word to learn :(");
-                            learntWord = Console.ReadLine();
+                    if(Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER)){
+                        if(tamagotchisOWned.Count < 1){
+                            currentScreen = "createAPet";
                         }
-                        firstPet.Teach(learntWord);
-                        System.Console.WriteLine(firstPet.name + " learnt the word " + '"' + learntWord +'"');
-
-                        break; 
-
-                        case "d":
-                        case "stat":
-                        case "get stat":
-                        case "get pet stat": 
-                        firstPet.PrintStats();
-
-                        break; 
-
-                        
+                        else{
+                            currentScreen = "petOwned";
+                        }
                     }
-
                     
-                }
-                else{
-                    System.Console.WriteLine("not valid resposne");
+                    break;
+
+                    case "createAPet":
+                    
+
+
+                    break;
+
+
                 }
 
-                
+                Raylib.BeginDrawing();
+                Raylib.ClearBackground(Color.RAYWHITE);
 
+                switch(currentScreen){ //Drawing on that screen
+                    case "title":
+                    //Draw title
+
+                    Raylib.DrawText("PRESS ENTER TO BEGIN GAME", 20, 20, 40, Color.LIGHTGRAY);
+
+                    break;
+
+                    case "createAPet":
+
+                    if (t1 == null)
+                    {
+                        t1 = new Tamagotchi();
+                    }
+                    //customization features added here! 
+                    
+                    t1.PickColourOfPet();
+
+                  
+                    break;
+
+                }
+
+                Raylib.EndDrawing();
 
             }
         }
 
-        static string toLower(string userAction){
-           userAction =  userAction.ToLower();
-
-           return userAction; 
-        }
-
-        static bool isValidResponse (string userResponse, string[] validResponses){
-
-             bool validResponseCheck = false; 
-
-            for(int i = 0; i< validResponses.Length ; i++){
-                if (userResponse == validResponses[i]){
-
-                   validResponseCheck = true;
-                }
-                
-            }
-
-            return validResponseCheck; 
-        }
     }
 }
