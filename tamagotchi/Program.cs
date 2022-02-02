@@ -75,7 +75,7 @@ namespace tamagotchi
 
                     Raylib.DrawText("PRESS ENTER TO CONFIRM COLOUR", 20, 20, 40, Color.LIGHTGRAY);
                     Raylib.DrawText("RIGHT TO TOGGLE BETWEEN COLOUR", 20, 70, 20, Color.LIGHTGRAY);
-
+                    
                         t1.Draw();
 
 
